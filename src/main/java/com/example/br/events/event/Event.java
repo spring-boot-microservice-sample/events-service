@@ -2,21 +2,22 @@ package com.example.br.events.event;
 
 
 import com.example.br.events.event.enums.EventType;
+import com.example.br.events.venue.Venue;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
-
 
 @Entity
 @Table ( name = "event")
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -27,16 +28,17 @@ public class Event {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (nullable = false, unique = true, updatable = false)
-    private Long id;
+    private Long event_id;
 
-    @Column
+    @Column (nullable = false, unique = true)
     private String name;
 
     @Column (nullable = false)
     private LocalDate date;
 
-    @Column
-    private Long venue_id;
+    @OneToOne
+    @JoinColumn(name = "venue_id")
+    private Venue venue;
 
     @Column
     @Enumerated
@@ -59,16 +61,15 @@ public class Event {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Event event = (Event) o;
-        return id != null && Objects.equals(id, event.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public Event fromEventRequestAndVenue(EventRequest eventRequest, Venue venue) {
+        return Event.builder()
+                .name(eventRequest.getName())
+                .date(eventRequest.getDate())
+                .venue(venue)
+                .type(eventRequest.getType())
+                .registration_count(eventRequest.getRegistration_count())
+                .created_by(eventRequest.getCreated_by())
+                .updated_by(eventRequest.getUpdated_by())
+                .build();
     }
 }

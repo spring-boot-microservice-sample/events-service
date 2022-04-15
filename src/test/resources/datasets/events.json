@@ -1,0 +1,32 @@
+[
+  {
+    "name" : "TATA IPL",
+    "id" : 2,
+    "date" : "02::Apr::2022",
+    "venue" : {
+      "name" : "AT&T Stadium",
+      "id" : 1,
+      "max_capacity" : 100000,
+      "address" : "1 AT&T Way, Arlington, TX 76011, United States"
+    },
+    "type" : "OFFLINE",
+    "registration_count" : 50000,
+    "created_by" : 1,
+    "updated_by" : 1
+  },
+  {
+    "name" : "TATA IPL",
+    "id" : 2,
+    "date" : "26::Mar::2022",
+    "venue" : {
+      "name" : "Wankhede Stadium",
+      "id" : 2,
+      "max_capacity" : 50000,
+      "address" : "Vinoo Mankad Rd, Churchgate, Mumbai, Maharashtra 400020"
+    },
+    "type" : "OFFLINE",
+    "registration_count" : 50000,
+    "created_by" : 1,
+    "updated_by" : 1
+  }
+]
