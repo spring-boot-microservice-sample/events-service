@@ -20,16 +20,8 @@ import java.time.LocalDateTime;
 public class EventRequest {
 
     private String name;
-
     private LocalDate date;
-
     private Long venue_id;
-
     private EventType type;
-
     private Integer registration_count;
-
-    private Long created_by;
-
-    private Long updated_by;
 }

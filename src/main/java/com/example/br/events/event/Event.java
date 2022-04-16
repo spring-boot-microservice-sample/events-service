@@ -61,15 +61,15 @@ public class Event {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public Event fromEventRequestAndVenue(EventRequest eventRequest, Venue venue) {
+    public Event fromEventRequestAndVenue(EventRequest eventRequest, Venue venue, Long user_id) {
         return Event.builder()
                 .name(eventRequest.getName())
                 .date(eventRequest.getDate())
                 .venue(venue)
                 .type(eventRequest.getType())
                 .registration_count(eventRequest.getRegistration_count())
-                .created_by(eventRequest.getCreated_by())
-                .updated_by(eventRequest.getUpdated_by())
+                .created_by(user_id)
+                .updated_by(user_id)
                 .build();
     }
 }

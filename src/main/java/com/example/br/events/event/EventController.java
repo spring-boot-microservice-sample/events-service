@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping ("/")
+@RequestMapping("/")
 public class EventController {
 
     @Autowired
@@ -34,11 +34,14 @@ public class EventController {
         } catch (Exception e) {
             return ResponseHandler.response( e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR );
         }
-
     }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody EventRequest eventRequest) {
+    public ResponseEntity<Object> add(
+            @RequestHeader(value = "user_id") String user_id,
+            @RequestBody EventRequest eventRequest
+    ) {
+//        String user_id = "1";
 
         if(eventRepository.existsByName(eventRequest.getName())){
             return ResponseHandler.response(
@@ -56,7 +59,11 @@ public class EventController {
         }
 
         try {
-            Event event = new Event().fromEventRequestAndVenue(eventRequest, venue.get());
+            Event event = new Event().fromEventRequestAndVenue(
+                    eventRequest,
+                    venue.get(),
+                    Long.parseLong(user_id)
+            );
             eventRepository.save(event);
             return ResponseHandler.response(
                     event.getName() + " Event added successfully",
